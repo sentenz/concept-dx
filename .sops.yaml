@@ -1,0 +1,29 @@
+creation_rules:
+  # 1. Dotenv files: encrypt only secrets-like keys, preserve non-sensitive config
+  - path_regex: '(^|/)\.env(\..*)?$'
+    input_type: dotenv
+    encrypted_regex: "(?i)(secret|password|token|apikey|api_key|key|credential|pass)"
+    key_groups:
+      - pgp:
+          - "F174FF15961E09604A3CBD78F650082B88276934" # sops
+          - "001BBDF9A7287BD678C00F07DB9B12FDB0590658" # sops-dx
+          - "4A88DC2628DC86414D12825A4BCB923204FF3992" # sops-sentenz
+
+  # 2. Certificates and Private Keys
+  - path_regex: '.*\.(pem|key|crt|cer|p12|der)$'
+    input_type: binary
+    key_groups:
+      - pgp:
+          - "F174FF15961E09604A3CBD78F650082B88276934" # sops
+          - "001BBDF9A7287BD678C00F07DB9B12FDB0590658" # sops-dx
+          - "4A88DC2628DC86414D12825A4BCB923204FF3992" # sops-sentenz
+
+  # 3.1. Generic group rule
+  - key_groups:
+      - pgp:
+          - "F174FF15961E09604A3CBD78F650082B88276934" # sops
+          - "001BBDF9A7287BD678C00F07DB9B12FDB0590658" # sops-dx
+          - "4A88DC2628DC86414D12825A4BCB923204FF3992" # sops-sentenz
+
+  # 3.2. Generic single rule
+  - pgp: "F174FF15961E09604A3CBD78F650082B88276934" # sops

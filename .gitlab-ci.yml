@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: Apache-2.0
+---
+workflow:
+  rules:
+    # Skip Pipeline for tagged commits
+    - if: $CI_COMMIT_TAG
+      when: never
+    # Run Scheduled Pipelines
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    # Else run Pipeline on Merge Request
+    - if: $CI_MERGE_REQUEST_IID
+    # Else run Pipeline on Push to default branch
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    # Else don't run in other Pipeline conditions
+    - when: never
+  auto_cancel:
+    on_new_commit: interruptible
+    on_job_failure: all
+
+include:
+  - component: $CI_SERVER_FQDN/ci-cd/analysis/shfmt@~latest
+    inputs:
+      allow_failure: true
+
+  - component: $CI_SERVER_FQDN/ci-cd/analysis/shellcheck@~latest
+    inputs:
+      allow_failure: true
+
+  - component: $CI_SERVER_FQDN/ci-cd/analysis/semgrep@~latest
+    inputs:
+      allow_failure: true
+
+  - component: $CI_SERVER_FQDN/ci-cd/analysis/gitleaks@~latest
+
+  - component: $CI_SERVER_FQDN/ci-cd/manager/renovate@~latest
+    inputs:
+      schedule: "only"

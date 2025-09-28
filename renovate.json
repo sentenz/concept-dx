@@ -10,10 +10,17 @@
   ],
   "vulnerabilityAlerts": {
     "labels": [
+      "dependencies",
       "security"
     ],
     "automerge": true
   },
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendors/**",
+    "**/charts/**"
+  ],
   "packageRules": [
     {
       "description": "Introduces breaking changes or require code adjustments due to changes in public APIs.",

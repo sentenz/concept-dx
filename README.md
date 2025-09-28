@@ -149,8 +149,4 @@ TODO
 
 ## 4. References
 
-- GitHub [SOPS](https://github.com/getsops/sops) repository.
-- GitHub [Task](https://github.com/go-task/task) repository.
-- GnuPG [GPG](https://www.gnupg.org/) pages.
-- Conventional [Commits](https://www.conventionalcommits.org/en/v1.0.0/) pages.
-- Semantic [Versioning](https://semver.org/) pages.
+- GitHub [Template DX](https://github.com/sentenz/template-dx) repository.

@@ -25,6 +25,14 @@
     "editor.tabSize": 2,
     "editor.defaultFormatter": null
   },
+  "[powershell]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false,
+    "editor.formatOnSave": true,
+    "editor.detectIndentation": true,
+    "editor.defaultFormatter": "ms-vscode.powershell"
+  },
+  "powershell.codeFormatting.preset": "OTBS",
   "[yaml]": {
     "editor.formatOnSave": true,
     "editor.insertSpaces": true,

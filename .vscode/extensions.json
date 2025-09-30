@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "ms-vscode.makefile-tools",
-    "ms-vscode.live-server",
     "ms-vscode.powershell",
     "ms-python.python",
     "ms-python.debugpy",

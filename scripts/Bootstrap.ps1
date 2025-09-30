@@ -91,8 +91,7 @@ function Install-WingetPackage {
                 Write-Verbose "Installing Winget package: $($id)"
 
                 winget install --id=$id -e --scope user --accept-package-agreements --accept-source-agreements --silent
-            }
-            catch {
+            } catch {
                 Write-Warning "Failed to install package: $($id) - $($_.Exception.Message)"
             }
         }
@@ -120,16 +119,14 @@ function Install-PipPackage {
             if (-not (Test-Path -Path $Venv.Path)) {
                 python -m venv $Venv.Path
             }
-        }
-        catch {
+        } catch {
             Write-Error "Failed to create virtual environment: $($_.Exception.Message)"
         }
         # Upgrade pip in virtual environment
         try {
             Write-Verbose "Upgrading pip to the latest version in $Venv.Path"
             & $Venv.Pip install --upgrade pip
-        }
-        catch {
+        } catch {
             Write-Warning "Failed to upgrade pip in $Venv.Path - $($_.Exception.Message)"
         }
     }
@@ -146,12 +143,10 @@ function Install-PipPackage {
 
                 if ($version) {
                     & $Venv.Pip install "$name==$version" --index-url $url --upgrade
-                }
-                else {
+                } else {
                     & $Venv.Pip install $name --index-url $url --upgrade
                 }
-            }
-            catch {
+            } catch {
                 Write-Warning "Failed to install package in $Venv.Path: $($name) - $($_.Exception.Message)"
             }
         }
@@ -161,8 +156,7 @@ function Install-PipPackage {
         try {
             Write-Verbose "Cleaning pip cache in $Venv.Path"
             & $Venv.Pip cache purge
-        }
-        catch {
+        } catch {
             Write-Warning "Failed to purge pip cache in $Venv.Path - $($_.Exception.Message)"
         }
     }
@@ -189,8 +183,7 @@ function Invoke-SetupDownload {
                 Write-Verbose "[$description] Downloading from $url"
 
                 Invoke-WebRequest -Uri $url -OutFile $filename -ErrorAction Stop
-            }
-            catch {
+            } catch {
                 Write-Error "[$description] Failed to download: $($_.Exception.Message)"
                 continue
             }
@@ -210,11 +203,9 @@ function Invoke-SetupDownload {
                         }
 
                         Write-Verbose "[$description] Extracted to $filepath"
-                    }
-                    catch {
+                    } catch {
                         Write-Error "[$description] Failed: $($_.Exception.Message)"
-                    }
-                    finally {
+                    } finally {
                         if (Test-Path $filename) {
                             Remove-Item -Path $filename -Force -Recurse -ErrorAction Stop
                         }
@@ -225,11 +216,9 @@ function Invoke-SetupDownload {
                     try {
                         Start-Process msiexec.exe -Wait -ArgumentList "/i `"$filename`" /quiet"
                         Write-Verbose "[$description] Installed"
-                    }
-                    catch {
+                    } catch {
                         Write-Error "[$description] Failed: $($_.Exception.Message)"
-                    }
-                    finally {
+                    } finally {
                         if (Test-Path $filename) {
                             Remove-Item -Path $filename -Force -Recurse -ErrorAction Stop
                         }
@@ -256,11 +245,9 @@ function Invoke-SetupDownload {
                         }
 
                         Write-Verbose "[$description] Extracted and installed to $filepath"
-                    }
-                    catch {
+                    } catch {
                         Write-Error "[$description] Failed: $($_.Exception.Message)"
-                    }
-                    finally {
+                    } finally {
                         if (Test-Path $filename) {
                             Remove-Item -Path $filename -Force -Recurse -ErrorAction Stop
                         }
@@ -284,8 +271,7 @@ try {
     Install-WingetPackage -Packages $Script:WingetPackage -Verbose
     Install-PipPackage -Packages $Script:PipPackage -Venv $Script:PipVenv -Verbose
     Invoke-SetupDownload -Downloads $Script:Download -Verbose
-}
-catch {
+} catch {
     Write-Error "In: $PSCommandPath Error: $_"
     $Host.SetShouldExit(1)
 }

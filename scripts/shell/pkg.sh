@@ -585,9 +585,13 @@ function pkg_go_install() {
 
   local -i retval=0
 
+  # Derive binary name from the last segment of the import path
+  local binary_name
+  binary_name="${package##*/}"
+
   # Check if package is already installed (any version)
   local package_path
-  package_path="$(go env GOPATH)/bin/${package}"
+  package_path="$(go env GOPATH)/bin/${binary_name}"
   if [[ -x "${package_path}" ]]; then
     return 0
   fi
@@ -634,9 +638,13 @@ function pkg_go_uninstall() {
 
   local -i retval=0
 
+  # Derive binary name from the last segment of the import path
+  local binary_name
+  binary_name="${package##*/}"
+
   # Check if package is installed (any version)
   local package_path
-  package_path="$(go env GOPATH)/bin/${package}"
+  package_path="$(go env GOPATH)/bin/${binary_name}"
   if [[ ! -e "${package_path}" ]]; then
     return 0
   fi

@@ -9,41 +9,9 @@ set -uo pipefail
 
 # Include Scripts
 
-source "$(dirname "${BASH_SOURCE[0]}")/shell/pkg.sh"
+source "$(dirname "${BASH_SOURCE[0]}")/shell/bootstrap_manager.sh"
 
-# Constant Variables
-
-readonly -A APT_PACKAGES=(
-  ["make"]=""
-  ["git"]=""
-  ["jq"]=""
-  ["bash"]=""
-  ["ca-certificates"]=""
-  ["go"]=""
-)
-
-readonly -A NPM_PACKAGES=(
-  ["skills"]="1.5.1"
-)
 # Control Flow Logic
 
-function bootstrap() {
-  local -i retval=0
-
-  pkg_apt_install_list APT_PACKAGES
-  ((retval |= $?))
-
-  pkg_apt_clean
-  ((retval |= $?))
-
-  pkg_npm_install_list NPM_PACKAGES
-  ((retval |= $?))
-
-  pkg_npm_clean
-  ((retval |= $?))
-
-  return "${retval}"
-}
-
-bootstrap
+bootstrap_manager_bootstrap
 exit "${?}"

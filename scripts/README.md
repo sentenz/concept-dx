@@ -11,14 +11,17 @@
 - `shell/`
   > Contains a suite of modular shell scripts intended for system automation and orchestration of complex workflows.
 
+- `shell/bootstrap_manager.sh`
+  > Bootstrap Manager library that centralizes all package definitions and provides the `bootstrap_manager_bootstrap`, `bootstrap_manager_setup`, and `bootstrap_manager_teardown` functions for managing the local environment lifecycle.
+
 - `bootstrap.sh`
-  > Initializes the operating environment by setting up essential prerequisites and configuring dependencies.
+  > Thin wrapper that delegates to `bootstrap_manager_bootstrap` to initialize the operating environment with essential prerequisites and dependencies.
 
 - `setup.sh`
-  > System configuration and preparation, ensuring that all required services and settings are in place for the successful execution of subsequent tasks or applications.
+  > Thin wrapper that delegates to `bootstrap_manager_setup` for system configuration and preparation, ensuring all required services and settings are in place.
 
 - `teardown.sh`
-  > Facilitates the graceful decommissioning of the environment by reversing configurations and cleaning up temporary artifacts.
+  > Thin wrapper that delegates to `bootstrap_manager_teardown` to facilitate graceful decommissioning of the environment by reversing configurations and cleaning up temporary artifacts.
 
 ### 1.2. PowerShell
 
